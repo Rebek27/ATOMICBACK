@@ -12,7 +12,7 @@ Content-Type: application/json
 
 {
     "correo": "yvfeacostaca@ittepic.edu.mx",
-    "contrasena":"123456"
+    "contrasena":"1234567"
 }
 
 
@@ -27,6 +27,7 @@ Content-Type: application/json
     "correo": "yvfeacostaca@ittepic.edu.mx",
     "contrasena":"123456",
     "edad": 22,
+    "ocupacion":"Estudiante",
     "objetivos_user": [],
     "detail_row":{
         "Activo": true,
@@ -40,4 +41,13 @@ Content-Type: application/json
             }
         ]
     }
+}
+
+##cambiar contraseña
+PUT {{api}}/cambiar-contrasena
+Content-Type: application/json
+
+{
+    "correo": "yvfeacostaca@ittepic.edu.mx",
+    "newPass":"1234567"
 }

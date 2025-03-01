@@ -34,7 +34,7 @@ export const getUserC = async (req,res,next) => {
     }
 };
 
-//VALIDAR SESION Lo estoy considerando como un get
+//VALIDAR SESION Lo estoy considerando como POST
 export const iniciarSesion = async (req,res,next) =>{
     try {
         const {correo, contrasena} = req.body;
@@ -61,16 +61,46 @@ export const postUser = async (req,res,next) => {
 
         if(!newUser){
             throw boom.badRequest('No se pudo agregar el usuario');
-        }else{
-            res.status(200).json(newUser);
         }
-
+        
+        res.status(200).json(newUser);
     } catch (error) {
         console.log(error);
         if (error.code === 11000) {
             // Código de error para duplicados en MongoDB
             return res.status(400).json({ mensaje: 'El correo ya está registrado.' });
         }
+        next(error);
+    }
+}
+
+export const verificarCorreo = async (req,res,next) => {
+    try {
+        const {correo,token} = req.query;
+        const usuario = await UserServices.verificarCorreo(correo,token);
+        console.log(usuario);
+        if(!usuario){
+            return res.status(400).json({ mensaje: 'Token inválido o expirado.' });
+        }
+
+        res.status(200).json({ mensaje: 'Correo verificado exitosamente. Ya puedes iniciar sesión.' });
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+}
+
+export const cambiarContra = async (req,res,next) => {
+    try {
+        const {correo,newPass} = req.body;
+        const usuario = await UserServices.putActualizarContra(correo,newPass);
+
+        if(!usuario){
+            return res.status(400).json({mensaje:'No se pudo actualizar la contraseña'});
+        }
+
+        res.status(200).json(usuario);
+    } catch (error) {
         next(error);
     }
 }

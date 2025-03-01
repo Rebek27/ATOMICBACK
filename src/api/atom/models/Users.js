@@ -5,8 +5,13 @@ const userSchema = new mongoose.Schema({
     nombre: {type:String},
     apellidos: {type:String},
     correo: {type:String,unique:true},
+    nombreUsuario: {type:String},
     contrasena: {type:String},
     edad: {type:Number},
+    ocupacion: {type:String},
+    verificado:{type:Boolean,default:false}, //para la verificacion de usuario
+    tokenVer:{type:String},
+    expirToken:{type:Date},
     objetivos_user:[{
         idObjetivo:{type:String},
         descripcion:{type:String},
