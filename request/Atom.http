@@ -1,0 +1,43 @@
+@api = http://localhost:3020/atom
+#@api = http://187.229.22.99:8010/api/v1/prod-serv
+### GET
+GET {{api}}/users
+### GET ITEM
+
+GET {{api}}/user/yvfeacostaca@ittepic.edu.mx
+
+
+POST {{api}}/login
+Content-Type: application/json
+
+{
+    "correo": "yvfeacostaca@ittepic.edu.mx",
+    "contrasena":"123456"
+}
+
+
+##POST nuevo USUARIO /register
+
+POST {{api}}/register
+Content-Type: application/json
+
+{
+    "nombre": "Yvan Fernando",
+    "apellidos": "Acosta Carrillo",
+    "correo": "yvfeacostaca@ittepic.edu.mx",
+    "contrasena":"123456",
+    "edad": 22,
+    "objetivos_user": [],
+    "detail_row":{
+        "Activo": true,
+        "Borrado": false,
+        "detail_row_reg":[
+            {
+                "FechaReg": "2025-02-27",
+                "UsuarioReg":"yvfeacostaca",
+                "FechaUltMod": "2025-02-27",
+                "UsuarioMod":"yvfeacostaca"
+            }
+        ]
+    }
+}

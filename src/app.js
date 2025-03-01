@@ -1,10 +1,13 @@
 import morgan from "morgan";
 import express from "express";
 import cors from "cors";
+import routeAPI from "./api/atom/routes/index"
+
 import config from "./config/config";
-import { mongoose } from "./config/database.config";
 
 const app = express();
+
+import { mongoose } from "./config/database.config";
 
 app.set('port',config.PORT);
 app.use(cors());
@@ -24,6 +27,7 @@ app.get('/atomic', (req,res)=>{
     );
 })
 // Routes routeAPI(app);
+routeAPI(app);
 // Swagger Docs
 // Middleware para el manejo de errores
 // Export App
