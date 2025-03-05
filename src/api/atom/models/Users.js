@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
     tokenVer:{type:String},
     expirToken:{type:Date},
     objetivos_user:[{
-        idObjetivo:{type:String},
+        //idObjetivo:{type:String},
         descripcion:{type:String},
         fechaInicio:{type:Date},
         estado: {type: String},

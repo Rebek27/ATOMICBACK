@@ -160,3 +160,68 @@ export const putActualizarContra = async (correo,newPass) => {
         throw boom.badImplementation('Error al cambiar la contraseña');
     }
 }
+
+//-----PUT para cambiar nombre y apellido(excepto correo)
+export const actualizarNombreAp = async (correo,nuevosDatos) => {
+    try {
+        const user = await Users.findOne({correo});
+        if(!user){
+            throw boom.notFound('Usuario no encontrado');
+        }
+
+        if(nuevosDatos.nombre === user.nombre){
+            user.nombre = nuevosDatos.nombre;
+            user.apellidos = nuevosDatos.apellidos;
+        }else if(nuevosDatos.apellidos == user.apellidos){
+            user.nombre = nuevosDatos.nombre;
+        }
+
+        return await user.save();
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const actualizarNomUs = async (correo,nuevoNU) => {
+    try{
+        const user = await Users.findOne({correo});
+        if(!user){
+            throw boom.notFound('Usuario no encontrado');
+        }
+
+        user.nombreUsuario = nuevoNU;
+
+        return await user.save();
+    }catch(error){
+        throw error;
+    }
+}
+
+export const actualizarOcupacion = async (correo,nuevaOcupacion) => {
+    try{
+        const user = await Users.findOne({correo});
+        if(!user){
+            throw boom.notFound('Usuario no encontrado');
+        }
+
+        user.ocupacion = nuevaOcupacion;
+
+        return await user.save();
+    }catch(error){
+        throw error;
+    }
+}
+//AGREGAR OBJETIVOS
+export const agregarObjetivo = async (correo,objetivo) => {
+    try {
+        const user = await Users.findOne({correo});
+        if (!user) {
+            throw boom.notFound('Usuario no encontrado');
+        }
+        user.objetivos_user.push(objetivo);
+
+        return await user.save();
+    } catch (error) {
+        throw boom.badRequest(error.message);
+    }
+}

@@ -12,12 +12,11 @@ Content-Type: application/json
 
 {
     "correo": "yvfeacostaca@ittepic.edu.mx",
-    "contrasena":"1234567"
+    "contrasena":"123456"
 }
 
 
 ##POST nuevo USUARIO /register
-
 POST {{api}}/register
 Content-Type: application/json
 
@@ -50,4 +49,30 @@ Content-Type: application/json
 {
     "correo": "yvfeacostaca@ittepic.edu.mx",
     "newPass":"1234567"
+}
+
+##Cambiar datos de la cuenta
+PUT {{api}}/cambiar-nomap
+Content-Type: application/json
+
+{
+    "correo": "yvfeacostaca@ittepic.edu.mx",
+    "nombre":"Yvan Fernando",
+    "apellidos":"Acosta Carrillo"
+}
+
+PUT {{api}}/cambiar-nomus
+Content-Type: application/json
+
+{
+    "correo": "yvfeacostaca@ittepic.edu.mx",
+    "nombreUsuario":"ElGatoMaster344"
+}
+
+PUT {{api}}/cambiar-ocupacion
+Content-Type: application/json
+
+{
+    "correo": "yvfeacostaca@ittepic.edu.mx",
+    "ocupacion":"Emprendedor"
 }

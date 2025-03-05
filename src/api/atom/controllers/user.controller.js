@@ -104,3 +104,77 @@ export const cambiarContra = async (req,res,next) => {
         next(error);
     }
 }
+
+//Cambios de datos
+export const cambiarNomAp = async (req,res,next) =>{
+    try {
+        const { correo,nombre,apellidos } = req.body;
+        if(!correo && (!nombre && !apellidos)){
+            return res.status(400).json({mensaje:'Parametros faltantes para completar la operacion'});
+        }
+        const nuevosDatos = {
+            nombre,
+            apellidos
+        }
+
+        const usuarioActualizado = await UserServices.actualizarNombreAp(correo,nuevosDatos);
+        if(!usuarioActualizado){
+            return res.status(400).json({mensaje:'No se pudo actualizar el usuario'});
+        }
+
+        return res.status(200).json(usuarioActualizado);
+    } catch (error) {
+        return res.status(400).json({mensaje:error.message});
+    }
+}
+//Cambiar nombre de usuario
+export const cambiarNomUs = async (req,res,next) => {
+    try{
+        const { correo, nombreUsuario } = req.body;
+        const usuario = await UserServices.actualizarNomUs(correo,nombreUsuario);
+
+        if(!usuario){
+            res.status(401).json({mensaje:'No se pudo actualizar el nombre'});
+        }
+        return res.status(200).json(usuario);
+    }catch(error){
+        return res.status(400).json({mensaje:error.message});
+    }
+}
+//cambiar ocupacion
+export const cambiarOcupacion = async (req,res,next) => {
+    try{
+        const { correo, ocupacion } = req.body;
+        const usuario = await UserServices.actualizarOcupacion(correo,ocupacion);
+
+        if(!usuario){
+            res.status(401).json({mensaje:'No se pudo actualizar la ocupacion'});
+        }
+        return res.status(200).json(usuario);
+    }catch(error){
+        next(error);
+    }
+}
+
+//Agregar objetivos
+export const agregarObjetivo = async (req,res,next) => {
+    try {
+        const {correo, descripcion,fechaInicio, estado,prioridad,} = req.body;
+
+        const nuevoObjetivo = {
+            descripcion,
+            fechaInicio,
+            estado,
+            prioridad,
+        }
+
+        const us = await UserServices.agregarObjetivo(correo,nuevoObjetivo);
+        if (!us) {
+            throw boom.badRequest('No se pudo agregar el objetivo');
+        }
+
+        return res.status(200).json(us);
+    } catch (error) {
+        next(error);
+    }
+}
