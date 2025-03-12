@@ -2,24 +2,28 @@ import * as mongoose from 'mongoose';
 
 const EventosSchema = new mongoose.Schema({
     correo: {type:String},
+    idEvento:{type:String},
     titulo: {type:String},
     descripcion: {type:String},
     fechaInicio: {type:Date},
     fechaFin: {type:Date},
     recordatorio: {type:Boolean},
     repeticion: {type:String},
-    detail_row:{
-        Activo:{type:Boolean,default:true},
-        Borrado:{type:Boolean,default:false},
-        detail_row_reg:[
-            {
-                FechaReg:{type:Date,default:Date.now},
-                UsuarioReg:{type:String},
-                FechaUltMod:{type:Date,default:Date.now},
-                UsuarioMod:{type:String},
-            }
-        ]
-    }
+    Activo: {type:Boolean,default:true}
+});
+
+//Middleware para generar el idEvento
+EventosSchema.pre('save',async function(next) {
+   if(!this.isNew)return next();
+   
+   try {
+        const count = await this.constructor.countDocuments({correo:this.correo});
+        //solucion momentanea pq podria generar problemas de concurrencia despues
+        this.idEvento=`${this.correo.substring(0,3)}-${(count+1)>9? '0'+(count+1):(count+1)}`;
+        next();
+   } catch (error) {
+        next(error);
+   }
 });
 
 export default mongoose.model(

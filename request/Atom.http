@@ -76,3 +76,77 @@ Content-Type: application/json
     "correo": "yvfeacostaca@ittepic.edu.mx",
     "ocupacion":"Emprendedor"
 }
+
+##-------------------EVENTOS
+POST {{api}}/events
+Content-Type: application/json
+
+{
+    "correo": "yvfeacostaca@ittepic.edu.mx",
+    "titulo": "WAYEN",
+    "descripcion": "TOMAR",
+    "fechaInicio": "2025-03-15",
+    "fechaFin": "2025-03-15",
+    "recordatorio": false,
+    "repeticion": false
+}
+
+##Lista de eventos
+GET {{api}}/events
+Content-Type: application/json
+
+{
+    "correo": "yvfeacostaca@ittepic.edu.mx"
+}
+
+GET {{api}}/events-proximos
+Content-Type: application/json
+
+{
+    "correo": "yvfeacostaca@ittepic.edu.mx"
+}
+
+GET {{api}}/events-vencidos
+Content-Type: application/json
+
+{
+    "correo": "yvfeacostaca@ittepic.edu.mx"
+}
+
+
+##Evento en especifico
+GET {{api}}/events/yvf-2.4
+Content-Type: application/json
+
+{
+    "correo": "yvfeacostaca@ittepic.edu.mx"
+}
+
+
+
+
+
+##Actualizar evento
+PUT {{api}}/events/yvf-1.4
+Content-Type: application/json
+
+{
+    "correo": "yvfeacostaca@ittepic.edu.mx",
+    "titulo": "Vistar a mi abuela",
+    "descripcion": "Ir al panteon para estar un rato con mi abuela",
+    "fechaInicio": "2025-03-06",
+    "fechaFin": "2025-03-06",
+    "recordatorio": false,
+    "repeticion": false
+}
+
+
+
+
+##Eliminar evento
+DELETE {{api}}/events/yvf-2.4
+Content-Type: application/json
+
+{
+    "correo": "yvfeacostaca@ittepic.edu.mx"
+}
