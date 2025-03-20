@@ -2,9 +2,12 @@ import { getUserC } from './user.services';
 import Eventos from '../models/Eventos';
 import boom from '@hapi/boom';
 
-//Empezamos por la creacion de un evento nuevo
+//Empezamos por la creacion de un evento nuevo EN proceso todavia
 export const addEvent = async (correo,evento) => {
     try {
+        if(correo != evento.correo || evento.correo==undefined){
+            throw boom.unauthorized('No permite el acceso');
+        }
         const user = await getUserC(correo);
         if(!user){
             throw boom.badData('Usuario no encontrado');

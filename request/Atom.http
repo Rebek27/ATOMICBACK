@@ -42,12 +42,13 @@ Content-Type: application/json
     }
 }
 
-##cambiar contraseña
+##cambiar contraseña SE CAMBIA EL TOKEN ANTES DE PROBAR PARA ESTE PEDO
 PUT {{api}}/cambiar-contrasena
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJZdmFuIEZlcm5hbmRvIiwiY29ycmVvIjoieXZmZWFjb3N0YWNhQGl0dGVwaWMuZWR1Lm14IiwiaWF0IjoxNzQyMjcxMDk1LCJleHAiOjE3NDIyNzQ2OTV9.OfNMLU-JiY_Fz3Wfs56Z7CfwB7Rvpxq5PyPL7Ytm2o0
 
 {
-    "correo": "yvfeacostaca@ittepic.edu.mx",
+    "oldPass":"123456",
     "newPass":"1234567"
 }
 
@@ -77,9 +78,11 @@ Content-Type: application/json
     "ocupacion":"Emprendedor"
 }
 
-##-------------------EVENTOS
+##-------------------EVENTOS --Cambiar el token
 POST {{api}}/events
 Content-Type: application/json
+Authorization: Bearer 
+
 
 {
     "correo": "yvfeacostaca@ittepic.edu.mx",

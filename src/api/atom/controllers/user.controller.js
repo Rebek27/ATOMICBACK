@@ -90,10 +90,12 @@ export const verificarCorreo = async (req,res,next) => {
     }
 }
 
+//ACTUALIZADO
 export const cambiarContra = async (req,res,next) => {
     try {
-        const {correo,newPass} = req.body;
-        const usuario = await UserServices.putActualizarContra(correo,newPass);
+        const { correo } = req.usuario; //Esto lo extrae del token de verificacion
+        const {oldPass,newPass} = req.body;
+        const usuario = await UserServices.putActualizarContra(correo,oldPass,newPass);
 
         if(!usuario){
             return res.status(400).json({mensaje:'No se pudo actualizar la contraseña'});
@@ -105,11 +107,12 @@ export const cambiarContra = async (req,res,next) => {
     }
 }
 
-//Cambios de datos
+//Cambios de datos Actualizado
 export const cambiarNomAp = async (req,res,next) =>{
     try {
-        const { correo,nombre,apellidos } = req.body;
-        if(!correo && (!nombre && !apellidos)){
+        const {correo} = req.usuario;
+        const { nombre,apellidos } = req.body;
+        if(!nombre && !apellidos){
             return res.status(400).json({mensaje:'Parametros faltantes para completar la operacion'});
         }
         const nuevosDatos = {
@@ -127,10 +130,12 @@ export const cambiarNomAp = async (req,res,next) =>{
         return res.status(400).json({mensaje:error.message});
     }
 }
-//Cambiar nombre de usuario
+
+//Cambiar nombre de usuario ACTUALIZADO
 export const cambiarNomUs = async (req,res,next) => {
     try{
-        const { correo, nombreUsuario } = req.body;
+        const {correo} = req.usuario;
+        const { nombreUsuario } = req.body;
         const usuario = await UserServices.actualizarNomUs(correo,nombreUsuario);
 
         if(!usuario){
@@ -141,10 +146,11 @@ export const cambiarNomUs = async (req,res,next) => {
         return res.status(400).json({mensaje:error.message});
     }
 }
-//cambiar ocupacion
+//cambiar ocupacion ACTUALIZADO
 export const cambiarOcupacion = async (req,res,next) => {
     try{
-        const { correo, ocupacion } = req.body;
+        const {correo} = req.usuario;
+        const { ocupacion } = req.body;
         const usuario = await UserServices.actualizarOcupacion(correo,ocupacion);
 
         if(!usuario){
@@ -156,25 +162,25 @@ export const cambiarOcupacion = async (req,res,next) => {
     }
 }
 
-//Agregar objetivos
-export const agregarObjetivo = async (req,res,next) => {
-    try {
-        const {correo, descripcion,fechaInicio, estado,prioridad,} = req.body;
+//Agregar objetivos INACTIVO
+// export const agregarObjetivo = async (req,res,next) => {
+//     try {
+//         const {correo, descripcion,fechaInicio, estado,prioridad,} = req.body;
 
-        const nuevoObjetivo = {
-            descripcion,
-            fechaInicio,
-            estado,
-            prioridad,
-        }
+//         const nuevoObjetivo = {
+//             descripcion,
+//             fechaInicio,
+//             estado,
+//             prioridad,
+//         }
 
-        const us = await UserServices.agregarObjetivo(correo,nuevoObjetivo);
-        if (!us) {
-            throw boom.badRequest('No se pudo agregar el objetivo');
-        }
+//         const us = await UserServices.agregarObjetivo(correo,nuevoObjetivo);
+//         if (!us) {
+//             throw boom.badRequest('No se pudo agregar el objetivo');
+//         }
 
-        return res.status(200).json(us);
-    } catch (error) {
-        next(error);
-    }
-}
+//         return res.status(200).json(us);
+//     } catch (error) {
+//         next(error);
+//     }
+// }

@@ -4,10 +4,10 @@ import boom from '@hapi/boom';
 //creacion de un nuevo evento
 export const addEvent = async (req,res,next) => {
     try {
-        //const {correo} = req.body;
+        const {correo} = req.usuario;
         const nuevoEvento = req.body;
         console.log(nuevoEvento);
-        const evento = await EventServices.addEvent(nuevoEvento.correo,nuevoEvento);
+        const evento = await EventServices.addEvent(correo,nuevoEvento);
 
         if(!evento){
             res.status(400).json('No se pudo agregar el evento');
