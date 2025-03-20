@@ -12,7 +12,7 @@ Content-Type: application/json
 
 {
     "correo": "yvfeacostaca@ittepic.edu.mx",
-    "contrasena":"123456"
+    "contrasena":"1234567"
 }
 
 
@@ -45,7 +45,7 @@ Content-Type: application/json
 ##cambiar contraseña SE CAMBIA EL TOKEN ANTES DE PROBAR PARA ESTE PEDO
 PUT {{api}}/cambiar-contrasena
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJZdmFuIEZlcm5hbmRvIiwiY29ycmVvIjoieXZmZWFjb3N0YWNhQGl0dGVwaWMuZWR1Lm14IiwiaWF0IjoxNzQyMjcxMDk1LCJleHAiOjE3NDIyNzQ2OTV9.OfNMLU-JiY_Fz3Wfs56Z7CfwB7Rvpxq5PyPL7Ytm2o0
+Authorization: Bearer 
 
 {
     "oldPass":"123456",
@@ -78,60 +78,53 @@ Content-Type: application/json
     "ocupacion":"Emprendedor"
 }
 
-##-------------------EVENTOS --Cambiar el token
-POST {{api}}/events
+##-------------------EVENTOS --Cambiar el token QUE SE DA AL INICIAR SESION
+POST {{api}}/event/add
 Content-Type: application/json
-Authorization: Bearer 
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJZdmFuIEZlcm5hbmRvIiwiY29ycmVvIjoieXZmZWFjb3N0YWNhQGl0dGVwaWMuZWR1Lm14IiwiaWF0IjoxNzQyNDQyNzI5LCJleHAiOjE3NDI0NTM1Mjl9.nH6VrOS0F80FFeg6hA-6FxUYrx2AxcWuZV3L_TGVO_4
 
 {
-    "correo": "yvfeacostaca@ittepic.edu.mx",
-    "titulo": "WAYEN",
-    "descripcion": "TOMAR",
-    "fechaInicio": "2025-03-15",
-    "fechaFin": "2025-03-15",
+    "titulo": "TOÑO",
+    "descripcion": "BALATREAR",
+    "fechaInicio": "2025-03-28",
+    "fechaFin": "2025-03-29",
     "recordatorio": false,
     "repeticion": false
 }
 
-##Lista de eventos
+##Lista de eventos CAMBIAR EL TOKEN
 GET {{api}}/events
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJZdmFuIEZlcm5hbmRvIiwiY29ycmVvIjoieXZmZWFjb3N0YWNhQGl0dGVwaWMuZWR1Lm14IiwiaWF0IjoxNzQyNDQyNzI5LCJleHAiOjE3NDI0NTM1Mjl9.nH6VrOS0F80FFeg6hA-6FxUYrx2AxcWuZV3L_TGVO_4
 
-{
-    "correo": "yvfeacostaca@ittepic.edu.mx"
-}
 
-GET {{api}}/events-proximos
-Content-Type: application/json
+# GET {{api}}/events-proximos
+# Content-Type: application/json
 
-{
-    "correo": "yvfeacostaca@ittepic.edu.mx"
-}
+# {
+#     "correo": "yvfeacostaca@ittepic.edu.mx"
+# }
 
-GET {{api}}/events-vencidos
-Content-Type: application/json
+# GET {{api}}/events-vencidos
+# Content-Type: application/json
 
-{
-    "correo": "yvfeacostaca@ittepic.edu.mx"
-}
+# {
+#     "correo": "yvfeacostaca@ittepic.edu.mx"
+# }
 
 
 ##Evento en especifico
-GET {{api}}/events/yvf-2.4
+GET {{api}}/event/yvf-1
 Content-Type: application/json
-
-{
-    "correo": "yvfeacostaca@ittepic.edu.mx"
-}
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJZdmFuIEZlcm5hbmRvIiwiY29ycmVvIjoieXZmZWFjb3N0YWNhQGl0dGVwaWMuZWR1Lm14IiwiaWF0IjoxNzQyNDQyNzI5LCJleHAiOjE3NDI0NTM1Mjl9.nH6VrOS0F80FFeg6hA-6FxUYrx2AxcWuZV3L_TGVO_4
 
 
 
 
 ##Actualizar evento
-PUT {{api}}/events/yvf-1.4
+PUT {{api}}/event-update/yvf-1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJZdmFuIEZlcm5hbmRvIiwiY29ycmVvIjoieXZmZWFjb3N0YWNhQGl0dGVwaWMuZWR1Lm14IiwiaWF0IjoxNzQyNDQyNzI5LCJleHAiOjE3NDI0NTM1Mjl9.nH6VrOS0F80FFeg6hA-6FxUYrx2AxcWuZV3L_TGVO_4
 
 {
     "correo": "yvfeacostaca@ittepic.edu.mx",
@@ -147,8 +140,9 @@ Content-Type: application/json
 
 
 ##Eliminar evento
-DELETE {{api}}/events/yvf-2.4
+DELETE {{api}}/event-delete/yvf-2
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJZdmFuIEZlcm5hbmRvIiwiY29ycmVvIjoieXZmZWFjb3N0YWNhQGl0dGVwaWMuZWR1Lm14IiwiaWF0IjoxNzQyNDQyNzI5LCJleHAiOjE3NDI0NTM1Mjl9.nH6VrOS0F80FFeg6hA-6FxUYrx2AxcWuZV3L_TGVO_4
 
 {
     "correo": "yvfeacostaca@ittepic.edu.mx"

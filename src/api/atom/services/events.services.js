@@ -5,12 +5,13 @@ import boom from '@hapi/boom';
 //Empezamos por la creacion de un evento nuevo EN proceso todavia
 export const addEvent = async (correo,evento) => {
     try {
-        if(correo != evento.correo || evento.correo==undefined){
-            throw boom.unauthorized('No permite el acceso');
-        }
         const user = await getUserC(correo);
         if(!user){
             throw boom.badData('Usuario no encontrado');
+        }
+        evento = {
+            ...evento,
+            correo
         }
         let newEvent = new Eventos(evento);
 
@@ -39,42 +40,42 @@ export const getEventList = async (correo) => {
     }
 }
 
-//Obtener la lista d eventos proximos del usuario
-export const eventsProxs = async (correo) => {
-    try {
-        const u = await getUserC(correo);
-        if (!u) {
-            throw boom.notFound('Usuario no encontrado');
-        }
-        const eventList = await Eventos.find({
-            correo:correo,
-            fechaInicio:{$gt:new Date()},
-            Activo:true
-        }).sort({fechaInicio:1});
+//Obtener la lista d eventos proximos del usuario INACTIVO
+// export const eventsProxs = async (correo) => {
+//     try {
+//         const u = await getUserC(correo);
+//         if (!u) {
+//             throw boom.notFound('Usuario no encontrado');
+//         }
+//         const eventList = await Eventos.find({
+//             correo:correo,
+//             fechaInicio:{$gt:new Date()},
+//             Activo:true
+//         }).sort({fechaInicio:1});
 
-        return eventList;
-    } catch (error) {
-        throw boom.internal(error.message);
-    }
-}
+//         return eventList;
+//     } catch (error) {
+//         throw boom.internal(error.message);
+//     }
+// }
 
-//Obtener la lista de eventos pasados
-export const pastEvents = async (correo) => {
-    try {
-        const u = await getUserC(correo);
-        if(!u){
-            throw boom.notFound('Usuario no encontrado');
-        }
-        const eventList = await Eventos.find({
-            correo:correo,
-            fechaFin:{$lt:new Date()},
-            Activo:true
-        }).sort({fechaFin:-1});
-        return eventList;
-    } catch (error) {
-        throw boom.internal(error.message);
-    }
-}
+//Obtener la lista de eventos pasados INACTIVO
+// export const pastEvents = async (correo) => {
+//     try {
+//         const u = await getUserC(correo);
+//         if(!u){
+//             throw boom.notFound('Usuario no encontrado');
+//         }
+//         const eventList = await Eventos.find({
+//             correo:correo,
+//             fechaFin:{$lt:new Date()},
+//             Activo:true
+//         }).sort({fechaFin:-1});
+//         return eventList;
+//     } catch (error) {
+//         throw boom.internal(error.message);
+//     }
+// }
 
 // Obtiene los detalles de un evento específico del usuario 
 export const getEventDetails = async (correo,idEvento) => {

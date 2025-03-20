@@ -22,7 +22,7 @@ export const addEvent = async (req,res,next) => {
 //obtener la lista de eventos del usuario
 export const eventList = async (req,res,next) => {
     try {
-        const {correo} = req.body;
+        const {correo} = req.usuario;
         console.log(correo);
         
         const eventos = await EventServices.getEventList(correo);
@@ -38,43 +38,43 @@ export const eventList = async (req,res,next) => {
 }
 
 //Obtener los eventos proximos
-export const eventsProx = async (req,res,next) => {
-    try {
-        const {correo} = req.body;
-        console.log(correo);
-        const proxEvents = await EventServices.eventsProxs(correo);
+// export const eventsProx = async (req,res,next) => {
+//     try {
+//         const {correo} = req.body;
+//         console.log(correo);
+//         const proxEvents = await EventServices.eventsProxs(correo);
 
-        if(!proxEvents){
-            res.status(400).json({mensaje:'No se encontró ningun evento'});
-        }
+//         if(!proxEvents){
+//             res.status(400).json({mensaje:'No se encontró ningun evento'});
+//         }
 
-        res.status(200).json(proxEvents);
+//         res.status(200).json(proxEvents);
 
-    } catch (error) {
-        next(error);
-    }
-}
+//     } catch (error) {
+//         next(error);
+//     }
+// }
 
-//obtener los eventos PASADOS
-export const pastEvents = async (req,res,next) => {
-    try {
-        const {correo} = req.body;
-        console.log(correo);
-        const eventosPasado = await EventServices.pastEvents(correo);
-        if(!eventosPasado){
-            res.status(400).json({mensaje:'No se encontró ningun evento'})
-        }
-        res.status(200).json(eventosPasado);
-    } catch (error) {
-        next(error);
-    }
-}
+//obtener los eventos PASADOS INACTIVO
+// export const pastEvents = async (req,res,next) => {
+//     try {
+//         const {correo} = req.body;
+//         console.log(correo);
+//         const eventosPasado = await EventServices.pastEvents(correo);
+//         if(!eventosPasado){
+//             res.status(400).json({mensaje:'No se encontró ningun evento'})
+//         }
+//         res.status(200).json(eventosPasado);
+//     } catch (error) {
+//         next(error);
+//     }
+// }
 
 //Obtiene los detalles del evento de un usuario
 export const eventDetails = async (req,res,next) => {
     try {
         const {id} = req.params;
-        const {correo} = req.body;
+        const {correo} = req.usuario;
         console.log(correo);
         console.log(id);
         const evento = await EventServices.getEventDetails(correo,id);
@@ -91,7 +91,7 @@ export const eventDetails = async (req,res,next) => {
 export const updateEvent = async (req,res,next) => {
     try {
         const {id} = req.params;
-        const {correo} = req.body;
+        const {correo} = req.usuario;
         const nuevoEvento = req.body;
 
         const updatedEvent = await EventServices.updateEvent(correo,nuevoEvento,id);
@@ -107,7 +107,7 @@ export const updateEvent = async (req,res,next) => {
 //Eliminar un evento del usuario
 export const deleteEvent = async (req,res,next) => {
     try {
-        const {correo} = req.body;
+        const {correo} = req.usuario;
         const {id} = req.params;
 
         const deletedEvent = await EventServices.deleteEvent(correo,id);
