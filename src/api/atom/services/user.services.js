@@ -16,7 +16,7 @@ function generarToken (usuario) {
       };
       // Firma del token
       const token = jwt.sign(payload, config.JWT_SECRET, {
-        expiresIn: '1h', // El token expira en 1 hora
+        expiresIn: '3h', // El token expira en 1 hora
       });
     
       return token;
@@ -145,14 +145,20 @@ export const verificarCorreo = async (correo,token) => {
     }
 }
 
-//---------PUT PARA ACTUALIZAR CONTRASEÑA --Falta el control y la ruta
-export const putActualizarContra = async (correo,newPass) => {
+//---------PUT PARA ACTUALIZAR CONTRASEÑA --Actualizado
+export const putActualizarContra = async (correo,oldPass,newPass) => {
     try {
         let user = await Users.findOne({correo});
 
         if(!user){
             throw boom.notFound('La cuenta que busca no existe');
         }
+
+        const passValidate = await bcrypt.compare(oldPass,usuario.contrasena);
+        if(!passValidate){
+            throw boom.notFound('La contraseña anterior no es correcta');
+        }
+
         user.contrasena = newPass;
 
         return await user.save();
@@ -161,7 +167,7 @@ export const putActualizarContra = async (correo,newPass) => {
     }
 }
 
-//-----PUT para cambiar nombre y apellido(excepto correo)
+//-----PUT para cambiar nombre y apellido(excepto correo) ---------ACTUALIZADO
 export const actualizarNombreAp = async (correo,nuevosDatos) => {
     try {
         const user = await Users.findOne({correo});
@@ -169,10 +175,10 @@ export const actualizarNombreAp = async (correo,nuevosDatos) => {
             throw boom.notFound('Usuario no encontrado');
         }
 
-        if(nuevosDatos.nombre === user.nombre){
+        if(nuevosDatos.nombre === user.nombre || !nuevosDatos.nombre){
             user.nombre = nuevosDatos.nombre;
             user.apellidos = nuevosDatos.apellidos;
-        }else if(nuevosDatos.apellidos == user.apellidos){
+        }else if(nuevosDatos.apellidos == user.apellidos || nuevosDatos.apellidos){
             user.nombre = nuevosDatos.nombre;
         }
 
@@ -182,6 +188,7 @@ export const actualizarNombreAp = async (correo,nuevosDatos) => {
     }
 }
 
+//--------ACTUALIZADO
 export const actualizarNomUs = async (correo,nuevoNU) => {
     try{
         const user = await Users.findOne({correo});
@@ -197,6 +204,7 @@ export const actualizarNomUs = async (correo,nuevoNU) => {
     }
 }
 
+//----------ACTUALIZADO
 export const actualizarOcupacion = async (correo,nuevaOcupacion) => {
     try{
         const user = await Users.findOne({correo});
@@ -211,17 +219,17 @@ export const actualizarOcupacion = async (correo,nuevaOcupacion) => {
         throw error;
     }
 }
-//AGREGAR OBJETIVOS
-export const agregarObjetivo = async (correo,objetivo) => {
-    try {
-        const user = await Users.findOne({correo});
-        if (!user) {
-            throw boom.notFound('Usuario no encontrado');
-        }
-        user.objetivos_user.push(objetivo);
+//------------INACTIVO
+// export const agregarObjetivo = async (correo,objetivo) => {
+//     try {
+//         const user = await Users.findOne({correo});
+//         if (!user) {
+//             throw boom.notFound('Usuario no encontrado');
+//         }
+//         user.objetivos_user.push(objetivo);
 
-        return await user.save();
-    } catch (error) {
-        throw boom.badRequest(error.message);
-    }
-}
+//         return await user.save();
+//     } catch (error) {
+//         throw boom.badRequest(error.message);
+//     }
+// }
