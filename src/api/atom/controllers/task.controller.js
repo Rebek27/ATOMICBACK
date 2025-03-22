@@ -1,54 +1,76 @@
-import Tareas from "../models/Tareas";
+import * as taskService from '../services/task.services.js';
+// Create a new task
+export const createTask = async (req, res, next) => {
+    try {
+        const {correo} = req.usuario;
+        req.body.correo = correo;
 
-// Crear tarea
-export const crearTarea = async (req, res) => {
-  try {
-    const { titulo, descripcion, fechaLimite } = req.body;
-    const tarea = await Tareas.create({
-      correo: req.user.correo,
-      titulo,
-      descripcion,
-      fechaLimite
-    });
-    res.status(201).json(tarea);
-  } catch (error) {
-    res.status(500).json({ message: 'Error al crear tarea' });
-  }
+        const task = await taskService.crearTarea(req.body);
+//desenglosar el cuerpo optional
+        if(!task){
+            return res.status(400).json({mensaje:'No se pudo crear la tarea'});
+        }
+        res.status(201).json(task);
+    } catch (error) {
+        next(error);
+    }
 };
 
-// Obtener tareas
-export const getTareas = async (req, res) => {
-  try {
-    const tareas = await Tareas.find({ correo: req.user.correo, 'detail_row.Borrado': false });
-    res.json(tareas);
-  } catch (error) {
-    res.status(500).json({ message: 'Error al obtener tareas' });
-  }
+// Get all tasks for a specific user
+export const getTasks = async (req, res, next) => {
+    try {
+        const tasks = await taskService.obtenerTareas(req.usuario.correo);
+       
+        if(!tasks){
+            return res.status(400).json({mensaje:'No se encontraron tareas'});
+        }
+        res.status(200).json(tasks);
+    } catch (error) {
+        next(error);
+    }
 };
 
-// Actualizar tarea
-export const updateTarea = async (req, res) => {
-  try {
-    const tarea = await Tareas.findOneAndUpdate(
-      { _id: req.params.id, correo: req.user.correo },
-      req.body,
-      { new: true }
-    );
-    res.json(tarea);
-  } catch (error) {
-    res.status(500).json({ message: 'Error al actualizar tarea' });
-  }
+// Get a specific task by ID
+export const getTaskById = async (req, res, next) => {
+    try {
+        const correo = req.usuario.correo;
+
+        const task = await taskService.obtenerTareaPorId(req.params.id,correo);
+        
+        if(!task){
+            return res.status(400).json({mensaje:'No se encontro la tarea'});
+        }
+    
+        res.status(200).json(task);
+    } catch (error) {
+        next(error);
+    }
 };
 
-// Eliminar tarea (marcar como borrada)
-export const deleteTarea = async (req, res) => {
-  try {
-    await Tareas.findOneAndUpdate(
-      { _id: req.params.id, correo: req.user.correo },
-      { 'detail_row.Borrado': true }
-    );
-    res.json({ message: 'Tarea eliminada' });
-  } catch (error) {
-    res.status(500).json({ message: 'Error al eliminar tarea' });
-  }
+// Update a specific task by ID
+export const updateTask = async (req, res, next) => {
+    try {
+        const correo = req.usuario.correo;
+        const task = await taskService.actualizarTarea(req.params.id, req.body,correo);
+        if(!task){
+            return res.status(400).json({mensaje:'No se pudo actualizar la tarea'});
+        }
+
+        res.status(200).json(task);
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Delete a specific task by ID
+export const deleteTask = async (req, res, next) => {
+    try {
+        const task = await taskService.eliminarTarea(req.params.id,req.usuario.correo);
+        if(!task){
+            return res.status(400).json({mensaje:'No se pudo eliminar la tarea'});
+        }
+        res.status(200).json(task);
+    } catch (error) {
+        next(error);
+    }
 };

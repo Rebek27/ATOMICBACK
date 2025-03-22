@@ -5,7 +5,7 @@ GET {{api}}/users
 ### GET ITEM
 
 GET {{api}}/user/yvfeacostaca@ittepic.edu.mx
-
+GET {{api}}/user/rotopetear@ittepic.edu.mx
 
 POST {{api}}/login
 Content-Type: application/json
@@ -75,4 +75,18 @@ Content-Type: application/json
 {
     "correo": "yvfeacostaca@ittepic.edu.mx",
     "ocupacion":"Emprendedor"
+}
+
+
+### Create a new task
+POST {{api}}/tasks
+Content-Type: application/json
+
+{
+    
+    "titulo": "Tarea 1",
+    "descripcion": "FRANCO ESCAMILLA",
+    "fechaLimite": "2026-03-30T00:00:00",
+    "completada": false,
+    
 }

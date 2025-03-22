@@ -1,51 +1,72 @@
-import Tareas from "../models/Tareas";
+import Task from "../models/Tareas";
 import boom from "@hapi/boom";
+import {getUserC} from "../services/user.services";
+// Create a new task
 
-// Crear tarea
-export const crearTarea = async (tareaData) => {
-  try {
-    const tarea = new Tareas(tareaData);
-    await tarea.save();
-    return tarea;
-  } catch (error) {
-    throw boom.internal('Error al crear la tarea', error);
-  }
+export const crearTarea = async (data) => {
+   
+    try {
+        //extraer el correo del usuario y verificar si se puede crear la tarea
+        const {correo} = data;
+        //verificar si el usuario existe en cualquier 
+        const user = await getUserC(correo);
+        if(!user){
+            throw boom.badData('Usuario no encontrado');
+        }
+        //antes de guardar una tarea se ejecuta el middleware para generar el idTarea
+
+        const tarea = new Task(data);
+        return await tarea.save();
+
+    } catch (error) {
+        throw boom.badImplementation({ message: error.message });
+    }
 };
 
-// Obtener tareas
+// Get all tasks for a specific user
 export const obtenerTareas = async (correo) => {
-  try {
-    const tareas = await Tareas.find({ correo, 'detail_row.Borrado': false });
-    return tareas;
-  } catch (error) {
-    throw boom.internal('Error al obtener las tareas', error);
-  }
+    try {
+        return await Task.find({ correo });
+    } catch (error) {
+        throw boom.badImplementation(error);
+    }
 };
 
-// Actualizar tarea
-export const actualizarTarea = async (id, tareaData, correo) => {
-  try {
-    const tarea = await Tareas.findOneAndUpdate(
-      { _id: id, correo },
-      tareaData,
-      { new: true }
-    );
-    return tarea;
-  } catch (error) {
-    throw boom.internal('Error al actualizar la tarea', error);
-  }
+
+// Get a specific task by ID
+export const obtenerTareaPorId = async (id,correo) => {
+    try {
+
+        const tarea = await Task.findOne({idTarea:id,correo});
+        if (!tarea) throw boom.notFound("Tarea no encontrada");
+        return tarea;
+    } catch (error) {
+        throw boom.badImplementation(error);
+    }
 };
 
-// Eliminar tarea (marcar como borrada)
-export const eliminarTarea = async (id, correo) => {
-  try {
-    const tarea = await Tareas.findOneAndUpdate(
-      { _id: id, correo },
-      { 'detail_row.Borrado': true },
-      { new: true }
-    );
-    return tarea;
-  } catch (error) {
-    throw boom.internal('Error al eliminar la tarea', error);
-  }
+// Update a specific task by ID
+export const actualizarTarea = async (id, data, correo) => {
+    try {
+        
+        const tarea = await Task.findByIdAndUpdate({id,correo}, data, { new: true });
+        if (!tarea) throw boom.notFound("Tarea no encontrada");
+        return tarea;
+    } catch (error) {
+        throw boom.badImplementation(error);
+    }
+};
+
+// Delete a specific task by ID
+export const eliminarTarea = async (id,correo) => {
+    try {
+        const tarea = await Task.findOne({idTarea:id,correo});
+        if (!tarea) throw boom.notFound("Tarea no encontrada");
+        tarea.Activo = false;
+        await tarea.save();
+        return tarea;
+        
+    } catch (error) {
+        throw boom.badImplementation(error);
+    }
 };
