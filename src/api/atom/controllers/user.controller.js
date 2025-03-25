@@ -49,6 +49,7 @@ export const iniciarSesion = async (req,res,next) =>{
         }
         res.json({token});
     } catch (error) {
+        res.status(501).json({mensaje:error})
         next(error);
     }
 }
@@ -86,6 +87,39 @@ export const verificarCorreo = async (req,res,next) => {
         res.status(200).json({ mensaje: 'Correo verificado exitosamente. Ya puedes iniciar sesión.' });
     } catch (error) {
         console.log(error);
+        next(error);
+    }
+}
+
+export const recuperarContra = async (req,res,next) => {
+    try {
+        const {correo} = req.body;
+        console.log(correo);
+        const usuario = await UserServices.solicitarRecuperacion(correo);
+        if(!usuario){
+            return res.status(401).json({mensaje:'Usuario no registrado'});
+        }
+        res.status(200).json({mensaje:'Solicitud enviada, revisa tu correo'});
+    } catch (error) {
+        next(error);
+    }
+}
+
+export const resetPassControl=async (req,res,next) => {
+    try {
+        const {correo,token} = req.query;
+        console.log(correo,token);
+        const {contrasena} = req.body;
+
+        if (!correo || !contrasena || !token) {
+            return res.status(400).json({ mensaje: 'Correo, nueva contraseña y token son requeridos' });
+          }
+
+        const usuario = await UserServices.resetPassServ(correo,contrasena,token);
+        if(!usuario) return res.status(401).json({mensaje:'No se pudo actualizar la contraseña'});
+
+        res.status(201).json(usuario);
+    } catch (error) {
         next(error);
     }
 }

@@ -47,6 +47,32 @@ async function enviarCorreoVer(correo,enlace){ //LO deje aqui porque solo se va 
     await transporter.sendMail(mensaje);
 }
 
+async function correoRecuperarContra(correo,enlace){ //LO deje aqui porque solo se va a usar en la verificacion del usuario
+    let transporter = nodemailer.createTransport({
+        service:'Gmail',
+        auth:{
+            user:config.EMAIL_USER,
+            pass:config.EMAIL_PASS
+        },
+    });
+
+    // Contenido del correo
+    const mensaje = {
+        from: config.EMAIL_USER,
+        to: correo,
+        subject: 'Recuperación de Cuenta Atomic',
+        html: `
+      <h1>Solicitud para recuperacion de contraseña</h1>
+      <p>Por favor, haz clic en el siguiente enlace para restablecer tu contraseña:</p>
+      <a href=${enlace}>Verificar Cuenta</a>
+      <p>Si no solicitaste esta acción, puedes ignorar este correo.</p>
+    `,
+    };
+
+    // Envía el correo
+    await transporter.sendMail(mensaje);
+}
+
 //DEvuelve la lista de usuarios
 export const getUsersList = async () => {
     let userList;
@@ -83,13 +109,13 @@ export const getValidateUser = async (correo,contrasena) =>{
         }
 
         if(!usuario.verificado){
-            throw boom.preconditionRequired('Por favo verifique su correo');
+            throw boom.preconditionRequired('Por favor verifique su correo');
         }
 
         const token = generarToken(usuario); 
         return token;
     }catch(error){
-        throw boom.internal(error);
+        throw error;
     }
 }
 
@@ -110,7 +136,7 @@ export const postUser = async (paUser) => {
 
         await newUser.save();
         //http://localhost:3020/atom
-        const enlaceVer = `http://localhost:3020/atom/verificar-correo?token=${token}&correo=${newUser.correo}`;
+        const enlaceVer = `${config.FRONTEND_URL}verificar-correo?token=${token}&correo=${newUser.correo}`;
         await enviarCorreoVer(newUser.correo,enlaceVer);
 
         return newUser;
@@ -139,6 +165,47 @@ export const verificarCorreo = async (correo,token) => {
 
         // await user.save();
         
+        return await user.save();
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const solicitarRecuperacion = async (correo) => {
+    try {
+        let user = await getUserC(correo);
+        if(!user) throw boom.notFound('No se encontró ese usuario');
+
+        // Generar el token de verificación
+        const token = crypto.randomBytes(32).toString('hex');
+        user.tokenVer = token;
+        user.expirToken = Date.now() + 3600000; // Token expira en 1 hora
+
+        await user.save();
+
+        const enlaceVer = `${config.FRONTEND_URL}recuperar-contra?token=${token}&correo=${correo}`;
+        await correoRecuperarContra(correo,enlaceVer);
+
+        return user;
+    } catch (error) {
+        throw boom.internal(error);
+    }
+}
+
+export const resetPassServ = async (correo,contrasena,token) => {
+    try {
+        let user = await Users.findOne({
+            correo:correo,
+            tokenVer:token,
+            expirToken:{$gt:Date.now()},
+        });
+        if(!user) throw boom.notFound('Correo no encontrado o token vencido');
+
+        console.log(user);
+        user.contrasena = contrasena;
+        user.tokenVer = undefined;
+        user.expirToken = undefined;
+
         return await user.save();
     } catch (error) {
         throw error;

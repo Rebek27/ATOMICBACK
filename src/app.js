@@ -1,7 +1,7 @@
 import morgan from "morgan";
 import express from "express";
 import cors from "cors";
-import routeAPI from "./api/atom/routes/index"
+import routeAPI from "./api/atom/routes/index";
 
 import config from "./config/config";
 

@@ -14,6 +14,10 @@ router.get('/verificar-correo', userController.verificarCorreo);
 router.post('/register',userController.postUser);
 //PARA VERIFICAR EL INICIO DE SESIÓN
 router.post('/login',userController.iniciarSesion);
+//Olvidaste la contraseña
+router.post('/recuperar-cuenta',userController.recuperarContra);
+//Ahora si el cambio de contraseña
+router.put('/reset-password',userController.resetPassControl);
 
 //----PUT--Cambiar contraseña Actualizado
 router.put('/cambiar-contrasena',verificarToken,userController.cambiarContra);
