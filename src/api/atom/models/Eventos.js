@@ -2,13 +2,13 @@ import * as mongoose from 'mongoose';
 
 const EventosSchema = new mongoose.Schema({
     correo: {type:String},
-    idEvento:{type:String},
-    titulo: {type:String},
+    idEvento:{type:String}, //Estos dos primeros se agregan en el back
+    title: {type:String},
     descripcion: {type:String},
     fechaInicio: {type:Date},
     fechaFin: {type:Date},
     recordatorio: {type:Boolean},
-    repeticion: {type:String},
+    etiqueta: {type:String},
     Activo: {type:Boolean,default:true}
 });
 
