@@ -132,7 +132,8 @@ export const postUser = async (paUser) => {
         const nom1 = newUser.nombre.split(' ')[0];
         const nom2 = newUser.apellidos.split(' ')[0];
 
-        newUser.nombreUsuario = nom1+nom2;
+        newUser.nombreUsuario = nom1+" "+nom2;
+        newUser.imagen = 'src/assets/profile/Perfil1.png';
 
         await newUser.save();
         //http://localhost:3020/atom
@@ -280,6 +281,22 @@ export const actualizarOcupacion = async (correo,nuevaOcupacion) => {
         }
 
         user.ocupacion = nuevaOcupacion;
+
+        return await user.save();
+    }catch(error){
+        throw error;
+    }
+}
+
+
+export const actualizarImagen = async (correo,nuevaImagen) => {
+    try{
+        const user = await Users.findOne({correo});
+        if(!user){
+            throw boom.notFound('Usuario no encontrado');
+        }
+
+        user.imagen = nuevaImagen;
 
         return await user.save();
     }catch(error){

@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
     contrasena: {type:String},
     edad: {type:Number},
     ocupacion: {type:String},
+    imagen: {type:String},
     verificado:{type:Boolean,default:false}, //para la verificacion de usuario
     tokenVer:{type:String},
     expirToken:{type:Date},
