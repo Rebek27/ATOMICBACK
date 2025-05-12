@@ -196,6 +196,23 @@ export const cambiarOcupacion = async (req,res,next) => {
     }
 }
 
+
+
+export const cambiarImagen = async (req,res,next) => {
+    try{
+        const {correo} = req.usuario;
+        const { imagen } = req.body;
+        const usuario = await UserServices.actualizarImagen(correo,imagen);
+
+        if(!usuario){
+            res.status(401).json({mensaje:'No se pudo actualizar el avatar'});
+        }
+        return res.status(200).json(usuario);
+    }catch(error){
+        next(error);
+    }
+}
+
 //Agregar objetivos INACTIVO
 // export const agregarObjetivo = async (req,res,next) => {
 //     try {

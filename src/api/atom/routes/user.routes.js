@@ -25,6 +25,7 @@ router.put('/cambiar-contrasena',verificarToken,userController.cambiarContra);
 router.put('/cambiar-nomap',verificarToken,userController.cambiarNomAp);
 router.put('/cambiar-nomus',verificarToken,userController.cambiarNomUs);
 router.put('/cambiar-ocupacion',verificarToken,userController.cambiarOcupacion);
+router.put('/cambiar-imagen',verificarToken,userController.cambiarImagen);
 
 //Agregar los objetivos PUT descartado
 // router.put('/agregar-objetivo',userController.agregarObjetivo);
