@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import * as taskController from '../controllers/task.controller.js';
-import { verificarToken } from '../../../middlewares/verificartokens.js';
+import { verificarToken } from '../middlewares/verificartokens.js';
 
 const router = Router();
 
