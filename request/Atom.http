@@ -161,3 +161,8 @@ Content-Type: application/json
     "completada": false,
     
 }
+
+
+## TAREAS-
+GET {{api}}/tasks
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJZdmFuIEZlcm5hbmRvIiwiY29ycmVvIjoieXZmZWFjb3N0YWNhQGl0dGVwaWMuZWR1Lm14IiwiaWF0IjoxNzQ4MTIxNjM4LCJleHAiOjE3NDgxMzI0Mzh9.dDWL3lho6EN32Kha3Yfm5Hp-hosjjydO0mfhuK0tru0
