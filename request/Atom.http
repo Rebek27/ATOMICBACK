@@ -152,14 +152,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJZdmFuI
 ### Create a new task
 POST {{api}}/tasks
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJZdmFuIEZlcm5hbmRvIiwiY29ycmVvIjoieXZmZWFjb3N0YWNhQGl0dGVwaWMuZWR1Lm14IiwiaWF0IjoxNzQ3MDY3OTEyLCJleHAiOjE3NDcwNzg3MTJ9.4EtzOu_trZsFsPaQrkxKRPw_mevkHrMsDay_2_v3KVE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJZdmFuIEZlcm5hbmRvIiwiY29ycmVvIjoieXZmZWFjb3N0YWNhQGl0dGVwaWMuZWR1Lm14IiwiaWF0IjoxNzQ4NzEwMTk0LCJleHAiOjE3NDg3MjA5OTR9.GxocAfhxt2zxwWvBdbMw-QIeo-iFYZm879WM4lpRUso
 
 {
-    
     "titulo": "Tarea 1",
     "descripcion": "FRANCO ESCAMILLA",
     "fechaLimite": "2026-03-30T00:00:00",
-    "completada": false,
+    "completada": false
     
 }
 

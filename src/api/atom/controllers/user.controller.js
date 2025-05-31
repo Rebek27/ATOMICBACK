@@ -137,7 +137,8 @@ export const cambiarContra = async (req,res,next) => {
 
         res.status(200).json(usuario);
     } catch (error) {
-        next(error);
+        return res.status(501).json({mensaje:error});
+        //next(error);
     }
 }
 
@@ -236,25 +237,17 @@ export const cambiarImagen = async (req,res,next) => {
     }
 }
 
-//Agregar objetivos INACTIVO
-// export const agregarObjetivo = async (req,res,next) => {
-//     try {
-//         const {correo, descripcion,fechaInicio, estado,prioridad,} = req.body;
+export const eliminarCuenta = async (req,res,next) =>{
+    try {
+        const {correo} = req.usuario;
+        const respuesta = await UserServices.eliminarCuenta(correo);
 
-//         const nuevoObjetivo = {
-//             descripcion,
-//             fechaInicio,
-//             estado,
-//             prioridad,
-//         }
+        if(!respuesta){
+            res.status(400).json({mensaje:'No se pudo eliminar la cuenta'});
+        }
 
-//         const us = await UserServices.agregarObjetivo(correo,nuevoObjetivo);
-//         if (!us) {
-//             throw boom.badRequest('No se pudo agregar el objetivo');
-//         }
-
-//         return res.status(200).json(us);
-//     } catch (error) {
-//         next(error);
-//     }
-// }
+        return res.status(200).json(respuesta);
+    } catch (error) {
+        return {message:error};
+    }
+}

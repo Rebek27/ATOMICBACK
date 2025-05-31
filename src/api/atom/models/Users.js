@@ -13,14 +13,6 @@ const userSchema = new mongoose.Schema({
     verificado:{type:Boolean,default:false}, //para la verificacion de usuario
     tokenVer:{type:String},
     expirToken:{type:Date},
-    // objetivos_user:[{
-    //     //idObjetivo:{type:String},
-    //     descripcion:{type:String},
-    //     fechaInicio:{type:Date},
-    //     estado: {type: String},
-    //     prioridad:{type:String},
-    //     default:[]
-    // }],
     Activo:{type:Boolean,default:true}
 });
 

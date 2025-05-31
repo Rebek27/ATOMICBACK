@@ -222,7 +222,7 @@ export const putActualizarContra = async (correo,oldPass,newPass) => {
             throw boom.notFound('La cuenta que busca no existe');
         }
 
-        const passValidate = await bcrypt.compare(oldPass,usuario.contrasena);
+        const passValidate = await bcrypt.compare(oldPass,user.contrasena);
         if(!passValidate){
             throw boom.notFound('La contraseña anterior no es correcta');
         }
@@ -231,7 +231,8 @@ export const putActualizarContra = async (correo,oldPass,newPass) => {
 
         return await user.save();
     } catch (error) {
-        throw boom.badImplementation('Error al cambiar la contraseña');
+        throw {mensaje:error.message};
+        //return ({mensaje:error.message});
     }
 }
 
@@ -314,17 +315,17 @@ export const actualizarImagen = async (correo,nuevaImagen) => {
         throw error;
     }
 }
-//------------INACTIVO
-// export const agregarObjetivo = async (correo,objetivo) => {
-//     try {
-//         const user = await Users.findOne({correo});
-//         if (!user) {
-//             throw boom.notFound('Usuario no encontrado');
-//         }
-//         user.objetivos_user.push(objetivo);
 
-//         return await user.save();
-//     } catch (error) {
-//         throw boom.badRequest(error.message);
-//     }
-// }
+export const eliminarCuenta = async (correo) =>{
+    try{
+        const user = await Users.findOneAndDelete({correo:correo});
+        
+        if(!user){
+            throw boom.notFound('Usuario no encontrado.');
+        }
+
+        return user;
+    }catch(e){
+        return e;
+    }
+}

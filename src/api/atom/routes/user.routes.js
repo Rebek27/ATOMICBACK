@@ -28,9 +28,7 @@ router.put('/cambiar-nomus',verificarToken,userController.cambiarNomUs);
 router.put('/cambiar-ocupacion',verificarToken,userController.cambiarOcupacion);
 router.put('/cambiar-imagen',verificarToken,userController.cambiarImagen);
 
-//Agregar los objetivos PUT descartado
-// router.put('/agregar-objetivo',userController.agregarObjetivo);
-
-//Va a faltar las opciones de eliminar
+//opciones de eliminar cuenta
+router.delete('/user',verificarToken,userController.eliminarCuenta);
 
 export default router;
