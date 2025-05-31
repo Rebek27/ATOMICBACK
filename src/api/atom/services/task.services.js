@@ -47,26 +47,28 @@ export const obtenerTareaPorId = async (id,correo) => {
 
 // Update a specific task by ID
 export const actualizarTarea = async (id, data, correo) => {
-    try {
-        
-        const tarea = await Task.findByIdAndUpdate({id,correo}, data, { new: true });
-        if (!tarea) throw boom.notFound("Tarea no encontrada");
-        return tarea;
-    } catch (error) {
-        throw boom.badImplementation(error);
-    }
+  try {
+    const tarea = await Task.findOneAndUpdate(
+      { idTarea: id, correo },
+      data,
+      { new: true }
+    );
+    if (!tarea) throw boom.notFound("Tarea no encontrada");
+    return tarea;
+  } catch (error) {
+    throw boom.badImplementation(error);
+  }
 };
 
 // Delete a specific task by ID
-export const eliminarTarea = async (id,correo) => {
-    try {
-        const tarea = await Task.findOne({idTarea:id,correo});
-        if (!tarea) throw boom.notFound("Tarea no encontrada");
-        tarea.Activo = false;
-        await tarea.save();
-        return tarea;
-        
-    } catch (error) {
-        throw boom.badImplementation(error);
-    }
+export const eliminarTarea = async (id, correo) => {
+  try {
+    const tarea = await Task.findOneAndDelete({ idTarea: id, correo });
+
+    if (!tarea) throw boom.notFound("Tarea no encontrada");
+
+    return tarea;
+  } catch (error) {
+    throw boom.badImplementation(error);
+  }
 };

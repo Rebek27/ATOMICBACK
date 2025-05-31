@@ -6,7 +6,7 @@ const TaskSchema = new mongoose.Schema({
     titulo: { type: String },
     descripcion: { type: String },
     fechaLimite: { type: Date },
-    completada: { type: Boolean, default: false },
+    completado: { type: Boolean, default: false },
     Activo: { type: Boolean, default: true }
 });
 
