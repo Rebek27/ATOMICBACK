@@ -152,6 +152,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJZdmFuI
 ### Create a new task
 POST {{api}}/tasks
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub21icmUiOiJZdmFuIEZlcm5hbmRvIiwiY29ycmVvIjoieXZmZWFjb3N0YWNhQGl0dGVwaWMuZWR1Lm14IiwiaWF0IjoxNzQ3MDY3OTEyLCJleHAiOjE3NDcwNzg3MTJ9.4EtzOu_trZsFsPaQrkxKRPw_mevkHrMsDay_2_v3KVE
 
 {
     

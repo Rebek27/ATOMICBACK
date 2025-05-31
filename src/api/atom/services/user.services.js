@@ -236,25 +236,36 @@ export const putActualizarContra = async (correo,oldPass,newPass) => {
 }
 
 //-----PUT para cambiar nombre y apellido(excepto correo) ---------ACTUALIZADO
-export const actualizarNombreAp = async (correo,nuevosDatos) => {
+export const actualizarNombre = async (correo,nuevosDatos) => {
     try {
         const user = await Users.findOne({correo});
         if(!user){
             throw boom.notFound('Usuario no encontrado');
         }
 
-        if(nuevosDatos.nombre === user.nombre || !nuevosDatos.nombre){
             user.nombre = nuevosDatos.nombre;
-            user.apellidos = nuevosDatos.apellidos;
-        }else if(nuevosDatos.apellidos == user.apellidos || nuevosDatos.apellidos){
-            user.nombre = nuevosDatos.nombre;
-        }
 
         return await user.save();
     } catch (error) {
         throw error;
     }
 }
+
+export const actualizarAp = async (correo,nuevosDatos) => {
+    try {
+        const user = await Users.findOne({correo});
+        if(!user){
+            throw boom.notFound('Usuario no encontrado');
+        }
+
+            user.apellidos = nuevosDatos.apellidos;
+
+        return await user.save();
+    } catch (error) {
+        throw error;
+    }
+}
+
 
 //--------ACTUALIZADO
 export const actualizarNomUs = async (correo,nuevoNU) => {

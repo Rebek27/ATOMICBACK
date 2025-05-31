@@ -22,7 +22,8 @@ router.put('/reset-password',userController.resetPassControl);
 //----PUT--Cambiar contraseña Actualizado
 router.put('/cambiar-contrasena',verificarToken,userController.cambiarContra);
 //------PUT para cambiar datos de la cuenta Actualizado
-router.put('/cambiar-nomap',verificarToken,userController.cambiarNomAp);
+router.put('/cambiar-nom',verificarToken,userController.cambiarNom);
+router.put('/cambiar-ap',verificarToken,userController.cambiarAp);
 router.put('/cambiar-nomus',verificarToken,userController.cambiarNomUs);
 router.put('/cambiar-ocupacion',verificarToken,userController.cambiarOcupacion);
 router.put('/cambiar-imagen',verificarToken,userController.cambiarImagen);

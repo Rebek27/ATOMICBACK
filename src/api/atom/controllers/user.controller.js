@@ -142,19 +142,42 @@ export const cambiarContra = async (req,res,next) => {
 }
 
 //Cambios de datos Actualizado
-export const cambiarNomAp = async (req,res,next) =>{
+export const cambiarNom = async (req,res,next) =>{
     try {
         const {correo} = req.usuario;
-        const { nombre,apellidos } = req.body;
-        if(!nombre && !apellidos){
+        const { nombre } = req.body;
+        if(!nombre){
             return res.status(400).json({mensaje:'Parametros faltantes para completar la operacion'});
         }
         const nuevosDatos = {
-            nombre,
+            nombre
+        }
+
+        const usuarioActualizado = await UserServices.actualizarNombre(correo,nuevosDatos);
+        if(!usuarioActualizado){
+            return res.status(400).json({mensaje:'No se pudo actualizar el usuario'});
+        }
+
+        return res.status(200).json(usuarioActualizado);
+    } catch (error) {
+        return res.status(400).json({mensaje:error.message});
+    }
+}
+
+
+//Cambios de datos Actualizado
+export const cambiarAp = async (req,res,next) =>{
+    try {
+        const {correo} = req.usuario;
+        const {apellidos } = req.body;
+        if(!apellidos){
+            return res.status(400).json({mensaje:'Parametros faltantes para completar la operacion'});
+        }
+        const nuevosDatos = {
             apellidos
         }
 
-        const usuarioActualizado = await UserServices.actualizarNombreAp(correo,nuevosDatos);
+        const usuarioActualizado = await UserServices.actualizarAp(correo,nuevosDatos);
         if(!usuarioActualizado){
             return res.status(400).json({mensaje:'No se pudo actualizar el usuario'});
         }
