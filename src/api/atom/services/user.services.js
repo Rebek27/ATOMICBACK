@@ -1,5 +1,7 @@
 //import { async } from "@babel/runtime/regenerator";
 import Users from "../models/Users";
+import Eventos from "../models/Eventos";
+import Tareas from "../models/Tareas";
 import boom from "@hapi/boom";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -323,6 +325,9 @@ export const eliminarCuenta = async (correo) =>{
         if(!user){
             throw boom.notFound('Usuario no encontrado.');
         }
+
+        await Eventos.deleteMany({correo:correo});
+        await Tareas.deleteMany({correo:correo});
 
         return user;
     }catch(e){
