@@ -1,4 +1,4 @@
-import * as EventServices from '../services/events.services';
+import * as EventServices from '../services/events.services.js';
 import boom from '@hapi/boom';
 
 //creacion de un nuevo evento

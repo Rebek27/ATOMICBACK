@@ -1,6 +1,6 @@
 //import { async } from "@babel/runtime/regenerator";
-import Users from "../models/Users";
-import * as UserServices from "../services/user.services";
+import Users from "../models/Users.js";
+import * as UserServices from "../services/user.services.js";
 import boom from "@hapi/boom";
 
 //Obtener todos los usuarios

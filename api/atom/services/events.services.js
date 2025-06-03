@@ -1,5 +1,5 @@
-import { getUserC } from './user.services';
-import Eventos from '../models/Eventos';
+import { getUserC } from './user.services.js';
+import Eventos from '../models/Eventos.js';
 import boom from '@hapi/boom';
 
 //Empezamos por la creacion de un evento nuevo EN proceso todavia

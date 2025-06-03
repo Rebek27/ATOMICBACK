@@ -2,7 +2,7 @@ import express from "express";
 import serverless from "serverless-http";
 import morgan from "morgan";
 import cors from "cors";
-import routeAPI from "../src/api/atom/routes/index.js";
+import routeAPI from "./atom/routes/index.js";
 import config from "../src/config/config.js";
 import { mongoose } from "../src/config/database.config.js";
 

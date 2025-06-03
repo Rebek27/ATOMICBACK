@@ -1,11 +1,11 @@
 //import { async } from "@babel/runtime/regenerator";
-import Users from "../models/Users";
-import Eventos from "../models/Eventos";
-import Tareas from "../models/Tareas";
+import Users from "../models/Users.js";
+import Eventos from "../models/Eventos.js";
+import Tareas from "../models/Tareas.js";
 import boom from "@hapi/boom";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import config from "../../../config/config";
+import config from "../../../src/config/config.js";
 import nodemailer from 'nodemailer';
 import crypto from 'node:crypto';
 

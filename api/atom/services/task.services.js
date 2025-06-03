@@ -1,6 +1,6 @@
-import Task from "../models/Tareas";
+import Task from "../models/Tareas.js";
 import boom from "@hapi/boom";
-import {getUserC} from "../services/user.services";
+import {getUserC} from "../services/user.services.js";
 // Create a new task
 
 export const crearTarea = async (data) => {
